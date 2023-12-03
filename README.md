@@ -1,0 +1,127 @@
+# My Advent of Code
+
+<!-- AOC TILES BEGIN -->
+<h1 align="center">
+  2023 - 6 ⭐
+</h1>
+<a href="AoC/src/Year2023/Day01.kt">
+  <img src="Media/2023/01.png" width="161px">
+</a>
+<a href="AoC/src/Year2023/Day02.kt">
+  <img src="Media/2023/02.png" width="161px">
+</a>
+<a href="AoC/src/Year2023/Day03.kt">
+  <img src="Media/2023/03.png" width="161px">
+</a>
+<h1 align="center">
+  2022 - 43 ⭐
+</h1>
+<a href="AoC/src/Year2022/Day01.kt">
+  <img src="Media/2022/01.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day02.kt">
+  <img src="Media/2022/02.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day03.kt">
+  <img src="Media/2022/03.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day04.kt">
+  <img src="Media/2022/04.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day05.kt">
+  <img src="Media/2022/05.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day06.kt">
+  <img src="Media/2022/06.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day07.kt">
+  <img src="Media/2022/07.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day08.kt">
+  <img src="Media/2022/08.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day09.kt">
+  <img src="Media/2022/09.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day10.kt">
+  <img src="Media/2022/10.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day11.kt">
+  <img src="Media/2022/11.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day12.kt">
+  <img src="Media/2022/12.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day13.kt">
+  <img src="Media/2022/13.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day14.kt">
+  <img src="Media/2022/14.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day15.kt">
+  <img src="Media/2022/15.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day16.kt">
+  <img src="Media/2022/16.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day17.kt">
+  <img src="Media/2022/17.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day18.kt">
+  <img src="Media/2022/18.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day19.kt">
+  <img src="Media/2022/19.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day20.kt">
+  <img src="Media/2022/20.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day21.kt">
+  <img src="Media/2022/21.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day22.kt">
+  <img src="Media/2022/22.png" width="161px">
+</a>
+<h1 align="center">
+  2021 - 20 ⭐
+</h1>
+<a href="AoC/src/Year2021/Day01/part1.kt">
+  <img src="Media/2021/01.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day02/common.kt">
+  <img src="Media/2021/02.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day03/part1.kt">
+  <img src="Media/2021/03.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day04/common.kt">
+  <img src="Media/2021/04.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day05/common.kt">
+  <img src="Media/2021/05.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day06/part1.kt">
+  <img src="Media/2021/06.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day07/part1.kt">
+  <img src="Media/2021/07.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day08/part1.kt">
+  <img src="Media/2021/08.png" width="161px">
+</a>
+<a href="None">
+  <img src="Media/2021/09.png" width="161px">
+</a>
+<a href="None">
+  <img src="Media/2021/10.png" width="161px">
+</a>
+<!-- AOC TILES END -->
+
+---
+The graphic above has been created with the [AoCTiles script][aoc-tiles].
+
+---
+[Advent of Code][aoc] – An annual event of Christmas-oriented programming challenges started December 2015. Every year since then, beginning on the first day of December, a programming puzzle is published every day for twenty-five days. You can solve the puzzle and provide an answer using the language of your choice.
+
+[aoc]: https://adventofcode.com
+[aoc-tiles]: https://github.com/LiquidFun/adventofcode/tree/main/AoCTiles

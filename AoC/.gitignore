@@ -1,0 +1,9 @@
+### IntelliJ IDEA ###
+AoC.iml
+out/
+
+### Mac OS ###
+.DS_Store
+
+### Puzzles input ###
+/res/
