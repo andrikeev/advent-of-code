@@ -5,6 +5,9 @@ typealias Point = Pair<Int, Int>
 fun readInput(name: String) =
     File("res", "$name.txt").readLines()
 
+fun testInput(input: String) =
+    input.trimIndent().lines()
+
 val Point.i
     get() = first
 
