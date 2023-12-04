@@ -17,7 +17,7 @@
   <img src="Media/2023/04.png" width="161px">
 </a>
 <h1 align="center">
-  2022 - 43 ⭐
+  2022 - 45 ⭐
 </h1>
 <a href="AoC/src/Year2022/Day01.kt">
   <img src="Media/2022/01.png" width="161px">
@@ -84,6 +84,9 @@
 </a>
 <a href="AoC/src/Year2022/Day22.kt">
   <img src="Media/2022/22.png" width="161px">
+</a>
+<a href="AoC/src/Year2022/Day23.kt">
+  <img src="Media/2022/23.png" width="161px">
 </a>
 <h1 align="center">
   2021 - 20 ⭐
