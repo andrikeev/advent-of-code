@@ -30,3 +30,28 @@ fun Point.adjacent(): List<Point> {
         moveBy(j = +1),
     )
 }
+
+fun Point.adj(): List<Point> {
+    return listOf(
+        moveBy(j = -1),
+        moveBy(i = -1),
+        moveBy(i = +1),
+        moveBy(j = +1),
+    )
+}
+
+infix fun Point.leftTo(that: Point): Boolean {
+    return this.i == that.i && this.j == that.j - 1
+}
+
+infix fun Point.above(that: Point): Boolean {
+    return this.i == that.i - 1 && this.j == that.j
+}
+
+infix fun Point.rightTo(that: Point): Boolean {
+    return this.i == that.i && this.j == that.j + 1
+}
+
+infix fun Point.below(that: Point): Boolean {
+    return this.i == that.i + 1 && this.j == that.j
+}
