@@ -1,14 +1,15 @@
 package Year2023
 
+import Direction
 import Point
 import above
-import adj
 import adjacent
+import adjacentSides
 import below
 import i
 import j
 import leftTo
-import moveBy
+import moveTo
 import readInput
 import rightTo
 import testInput
@@ -28,7 +29,7 @@ fun main() {
         while (toVisit.isNotEmpty()) {
             val point = toVisit.removeFirst()
             visited.add(point)
-            val next = point.adj()
+            val next = point.adjacentSides()
                 .filter { contains(it) }
                 .filter { !visited.contains(it) }
                 .firstOrNull {
@@ -69,14 +70,14 @@ fun main() {
         val map = map(input)
         val loop = map.loop()
 
-        val moves = mutableMapOf<Char, List<(Point.() -> Point)>>(
-            'S' to listOf({ moveBy(j = -1) }, { moveBy(i = -1) }, { moveBy(j = +1) }, { moveBy(i = +1) }),
-            '|' to listOf({ moveBy(i = -1) }, { moveBy(i = +1) }),
-            '-' to listOf({ moveBy(j = -1) }, { moveBy(j = +1) }),
-            'L' to listOf({ moveBy(i = -1) }, { moveBy(j = +1) }),
-            'J' to listOf({ moveBy(j = -1) }, { moveBy(i = -1) }),
-            '7' to listOf({ moveBy(j = -1) }, { moveBy(i = +1) }),
-            'F' to listOf({ moveBy(j = +1) }, { moveBy(i = +1) }),
+        val moves = mutableMapOf(
+            'S' to Direction.entries,
+            '|' to listOf(Direction.Up, Direction.Down),
+            '-' to listOf(Direction.Left, Direction.Right),
+            'L' to listOf(Direction.Up, Direction.Right),
+            'J' to listOf(Direction.Left, Direction.Up),
+            '7' to listOf(Direction.Left, Direction.Down),
+            'F' to listOf(Direction.Right, Direction.Down),
         )
 
         val expMap = mutableMapOf<Point, Char>()
@@ -85,8 +86,8 @@ fun main() {
             expMap[expPoint] = if (c != '.' && loop.contains(point)) 'X' else '.'
             expPoint.adjacent().forEach { expMap[it] = '.' }
             if (loop.contains(point)) {
-                moves.getValue(c).forEach { move ->
-                    expMap[expPoint.move()] = 'X'
+                moves.getValue(c).forEach { direction ->
+                    expMap[expPoint moveTo direction] = 'X'
                 }
             }
         }
@@ -95,7 +96,7 @@ fun main() {
         while (toVisit.isNotEmpty()) {
             val point = toVisit.removeFirst()
             expMap[point] = '0'
-            point.adj()
+            point.adjacentSides()
                 .filter { expMap[it] == '.' && !toVisit.contains(it) }
                 .forEach(toVisit::addLast)
         }
@@ -135,7 +136,7 @@ fun main() {
         .|II||II|.
         .L--JL--J.
         ..........
-    """.trimIndent())
+    """)
     check(part2(testInput3).also { println("part2 test: $it") } == 4)
 
     val input = readInput("Year2023/Day10")

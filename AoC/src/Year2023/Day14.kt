@@ -1,26 +1,25 @@
 package Year2023
 
+import charGrid
 import readInput
 import testInput
 
 fun main() {
 
     fun part1(input: List<String>): Int {
-        val list = Array(input.size) { input[it].toCharArray() }
-        val n = input.size
-        val m = input.first().length
+        val (grid, n, m) = input.charGrid()
 
         var res = 0
 
 
         for (i in 0 until n) {
             for (j in 0 until m) {
-                if (list[i][j] == 'O') {
+                if (grid[i][j] == 'O') {
                     var k = i
                     var s = 0
-                    while (k > 0 && list[k - 1][j] != '#') {
+                    while (k > 0 && grid[k - 1][j] != '#') {
                         k--
-                        if (list[k][j] == 'O') {
+                        if (grid[k][j] == 'O') {
                             s++
                         }
                     }
@@ -33,56 +32,54 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val list = Array(input.size) { input[it].toCharArray() }
-        val n = input.size
-        val m = input.first().length
+        val (grid, n, m) = input.charGrid()
 
         fun cycle() {
             for (i in 0 until n) {
                 for (j in 0 until m) {
-                    if (list[i][j] == 'O') {
+                    if (grid[i][j] == 'O') {
                         var k = i
-                        while (k > 0 && list[k - 1][j] == '.') {
+                        while (k > 0 && grid[k - 1][j] == '.') {
                             k--
                         }
-                        list[i][j] = '.'
-                        list[k][j] = 'O'
+                        grid[i][j] = '.'
+                        grid[k][j] = 'O'
                     }
                 }
             }
             for (i in 0 until n) {
                 for (j in 0 until m) {
-                    if (list[i][j] == 'O') {
+                    if (grid[i][j] == 'O') {
                         var k = j
-                        while (k > 0 && list[i][k - 1] == '.') {
+                        while (k > 0 && grid[i][k - 1] == '.') {
                             k--
                         }
-                        list[i][j] = '.'
-                        list[i][k] = 'O'
+                        grid[i][j] = '.'
+                        grid[i][k] = 'O'
                     }
                 }
             }
             for (i in n - 1 downTo 0) {
                 for (j in 0 until m) {
-                    if (list[i][j] == 'O') {
+                    if (grid[i][j] == 'O') {
                         var k = i
-                        while (k < n - 1 && list[k + 1][j] == '.') {
+                        while (k < n - 1 && grid[k + 1][j] == '.') {
                             k++
                         }
-                        list[i][j] = '.'
-                        list[k][j] = 'O'
+                        grid[i][j] = '.'
+                        grid[k][j] = 'O'
                     }
                 }
             }
             for (i in 0 until n) {
                 for (j in m - 1 downTo 0) {
-                    if (list[i][j] == 'O') {
+                    if (grid[i][j] == 'O') {
                         var k = j
-                        while (k < m - 1 && list[i][k + 1] == '.') {
+                        while (k < m - 1 && grid[i][k + 1] == '.') {
                             k++
                         }
-                        list[i][j] = '.'
-                        list[i][k] = 'O'
+                        grid[i][j] = '.'
+                        grid[i][k] = 'O'
                     }
                 }
             }
@@ -92,7 +89,7 @@ fun main() {
             var res = 0
             for (i in 0 until n) {
                 for (j in 0 until m) {
-                    if (list[i][j] == 'O') {
+                    if (grid[i][j] == 'O') {
                         res += n - i
                     }
                 }
@@ -103,7 +100,7 @@ fun main() {
         var i = 0
         val map = mutableMapOf<String, Pair<Int, Int>>()
         while (true) {
-            val key = list.joinToString { it.concatToString() }
+            val key = grid.joinToString { it.concatToString() }
 
             if (map.containsKey(key)) {
                 val (start) = map.getValue(key)
@@ -130,7 +127,7 @@ fun main() {
         .......O..
         #....###..
         #OO..#....
-    """.trimIndent())
+    """)
     check(part1(testInput).also { println("part1 test: $it") } == 136)
     check(part2(testInput).also { println("part2 test: $it") } == 64)
 

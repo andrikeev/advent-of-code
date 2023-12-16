@@ -1,5 +1,8 @@
 package Year2022
 
+import Point
+import i
+import j
 import readInput
 
 fun main() {
@@ -32,24 +35,24 @@ fun main() {
 }
 
 private class RocksGrid(
-    val blocked: MutableSet<Pair<Int, Int>>,
+    val blocked: MutableSet<Point>,
     private val floorLevel: Int,
 ) {
     fun addSandUnit(): Boolean {
         var pos = Pair(500, 0)
-        fun hasBottom(): Boolean = blocked.any { it -> it.first == pos.first && it.second > pos.second }
+        fun hasBottom(): Boolean = blocked.any { it.i == pos.i && it.j > pos.j }
         fun canFall(): Boolean {
-            return !blocked.contains(Pair(pos.first, pos.second + 1)) ||
-                    !blocked.contains(Pair(pos.first - 1, pos.second + 1)) ||
-                    !blocked.contains(Pair(pos.first + 1, pos.second + 1))
+            return !blocked.contains(Point(pos.i, pos.j + 1)) ||
+                    !blocked.contains(Point(pos.i - 1, pos.j + 1)) ||
+                    !blocked.contains(Point(pos.i + 1, pos.j + 1))
         }
 
         while (canFall()) {
             if (!hasBottom()) return false
             val newPos = when {
-                !blocked.contains(Pair(pos.first, pos.second + 1)) -> Pair(pos.first, pos.second + 1)
-                !blocked.contains(Pair(pos.first - 1, pos.second + 1)) -> Pair(pos.first - 1, pos.second + 1)
-                !blocked.contains(Pair(pos.first + 1, pos.second + 1)) -> Pair(pos.first + 1, pos.second + 1)
+                !blocked.contains(Point(pos.i, pos.j + 1)) -> Point(pos.i, pos.j + 1)
+                !blocked.contains(Point(pos.i - 1, pos.j + 1)) -> Point(pos.i - 1, pos.j + 1)
+                !blocked.contains(Point(pos.i + 1, pos.j + 1)) -> Point(pos.i + 1, pos.j + 1)
                 else -> error("not possible")
             }
             pos = newPos
@@ -59,21 +62,21 @@ private class RocksGrid(
     }
 
     fun addSandUnit2(): Boolean {
-        var pos = Pair(500, 0)
+        var pos = Point(500, 0)
         fun canFall(): Boolean {
-            return (pos.second < floorLevel - 1) &&
-                    (!blocked.contains(Pair(pos.first, pos.second + 1)) ||
-                            !blocked.contains(Pair(pos.first - 1, pos.second + 1)) ||
-                            !blocked.contains(Pair(pos.first + 1, pos.second + 1)))
+            return (pos.j < floorLevel - 1) &&
+                    (!blocked.contains(Point(pos.i, pos.j + 1)) ||
+                            !blocked.contains(Point(pos.i - 1, pos.j + 1)) ||
+                            !blocked.contains(Point(pos.i + 1, pos.j + 1)))
         }
         if (blocked.contains(pos)) {
             return false
         }
         while (canFall()) {
             val newPos = when {
-                !blocked.contains(Pair(pos.first, pos.second + 1)) -> Pair(pos.first, pos.second + 1)
-                !blocked.contains(Pair(pos.first - 1, pos.second + 1)) -> Pair(pos.first - 1, pos.second + 1)
-                !blocked.contains(Pair(pos.first + 1, pos.second + 1)) -> Pair(pos.first + 1, pos.second + 1)
+                !blocked.contains(Point(pos.i, pos.j + 1)) -> Point(pos.i, pos.j + 1)
+                !blocked.contains(Point(pos.i - 1, pos.j + 1)) -> Point(pos.i - 1, pos.j + 1)
+                !blocked.contains(Point(pos.i + 1, pos.j + 1)) -> Point(pos.i + 1, pos.j + 1)
                 else -> error("not possible")
             }
             pos = newPos
@@ -84,21 +87,21 @@ private class RocksGrid(
 
     companion object {
         fun parse(input: List<String>): RocksGrid {
-            val rocks = mutableSetOf<Pair<Int, Int>>()
+            val rocks = mutableSetOf<Point>()
             var floorLevel = 0
             input.forEach { line ->
                 val points = line
                     .split(" -> ")
-                    .map { it.split(",").map(String::toInt).let { (x, y) -> Pair(x, y) } }
+                    .map { it.split(",").map(String::toInt).let { (x, y) -> Point(x, y) } }
                 for (i in 1..points.lastIndex) {
                     val start = points[i - 1]
                     val end = points[i]
-                    for (x in minOf(start.first, end.first)..maxOf(start.first, end.first)) {
-                        for (y in minOf(start.second, end.second)..maxOf(start.second, end.second)) {
-                            rocks.add(Pair(x, y))
+                    for (x in minOf(start.i, end.i)..maxOf(start.i, end.i)) {
+                        for (y in minOf(start.j, end.j)..maxOf(start.j, end.j)) {
+                            rocks.add(Point(x, y))
                         }
                     }
-                    val maxLevel = maxOf(start.second, end.second) + 2
+                    val maxLevel = maxOf(start.j, end.j) + 2
                     if (maxLevel > floorLevel) {
                         floorLevel = maxLevel
                     }

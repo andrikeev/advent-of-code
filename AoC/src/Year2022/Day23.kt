@@ -1,14 +1,15 @@
 package Year2022
 
+import Direction8
 import Point
 import i
 import j
-import moveBy
 import readInput
 import testInput
+import moveTo
 
 fun main() {
-    val mainDirections = listOf(Compass.N, Compass.S, Compass.W, Compass.E)
+    val mainDirections = listOf(Direction8.N, Direction8.S, Direction8.W, Direction8.E)
 
     fun parseMap(input: List<String>) = input
         .flatMapIndexed { i, s ->
@@ -19,38 +20,27 @@ fun main() {
 
     fun considerMove(
         elves: Set<Elf>,
-        startDirection: Compass,
+        startDirection: Direction8,
     ): Map<Point, List<Elf>> {
-        val directions = Compass.entries.toTypedArray()
+        val directions = Direction8.entries.toTypedArray()
 
-        fun Point.to(direction: Compass) = when (direction) {
-            Compass.N -> moveBy(i = -1)
-            Compass.NE -> moveBy(i = -1, j = 1)
-            Compass.NW -> moveBy(i = -1, j = -1)
-            Compass.S -> moveBy(i = 1)
-            Compass.SE -> moveBy(i = 1, j = 1)
-            Compass.SW -> moveBy(i = 1, j = -1)
-            Compass.E -> moveBy(j = +1)
-            Compass.W -> moveBy(j = -1)
-        }
-
-        fun Compass.nextMoveDirection() = when (this) {
-            Compass.N -> Compass.S
-            Compass.S -> Compass.W
-            Compass.E -> Compass.N
-            Compass.W -> Compass.E
+        fun Direction8.nextMoveDirection() = when (this) {
+            Direction8.N -> Direction8.S
+            Direction8.S -> Direction8.W
+            Direction8.E -> Direction8.N
+            Direction8.W -> Direction8.E
             else -> error("Not a main direction $this")
         }
 
-        fun Compass.adjacent() = when (this) {
-            Compass.N -> listOf(Compass.N, Compass.NE, Compass.NW)
-            Compass.S -> listOf(Compass.S, Compass.SE, Compass.SW)
-            Compass.E -> listOf(Compass.E, Compass.NE, Compass.SE)
-            Compass.W -> listOf(Compass.W, Compass.NW, Compass.SW)
+        fun Direction8.adjacent() = when (this) {
+            Direction8.N -> listOf(Direction8.N, Direction8.NE, Direction8.NW)
+            Direction8.S -> listOf(Direction8.S, Direction8.SE, Direction8.SW)
+            Direction8.E -> listOf(Direction8.E, Direction8.NE, Direction8.SE)
+            Direction8.W -> listOf(Direction8.W, Direction8.NW, Direction8.SW)
             else -> error("Not a main direction $this")
         }
 
-        fun Compass.moveDirections() = buildList {
+        fun Direction8.moveDirections() = buildList {
             var direction = this@moveDirections
             repeat(mainDirections.size) {
                 add(direction)
@@ -61,15 +51,15 @@ fun main() {
         return elves
             .mapNotNull { elf ->
                 directions
-                    .map(elf::to)
+                    .map(elf::moveTo)
                     .takeIf { it.any(elves::contains) }
                     ?.let { startDirection.moveDirections() }
                     ?.firstOrNull { direction ->
                         direction.adjacent()
-                            .map(elf::to)
+                            .map(elf::moveTo)
                             .none(elves::contains)
                     }
-                    ?.let { direction -> elf.to(direction) to elf }
+                    ?.let { direction -> (elf moveTo direction) to elf }
             }
             .groupBy(
                 Pair<Point, Elf>::first,
@@ -138,7 +128,3 @@ fun main() {
 }
 
 private typealias Elf = Point
-
-private enum class Compass {
-    N, E, S, W, NE, SE, SW, NW;
-}

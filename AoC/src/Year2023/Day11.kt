@@ -1,11 +1,11 @@
 package Year2023
 
 import Point
+import manhattanDistanceTo
 import i
 import j
 import readInput
 import testInput
-import kotlin.math.abs
 
 fun main() {
 
@@ -33,7 +33,7 @@ fun main() {
         var sum = 0
         galaxies.forEachIndexed { i, first ->
             galaxies.drop(i + 1).forEach { second ->
-                sum += abs(first.j - second.j) + abs(first.i - second.i)
+                sum += first manhattanDistanceTo second
             }
         }
 
@@ -90,7 +90,7 @@ fun main() {
         ..........
         .......#..
         #...#.....
-    """.trimIndent())
+    """)
     check(part1(testInput).also { println("part1 test: $it") } == 374)
     check(part2(testInput).also { println("part2 test: $it") } == 82000210L)
 

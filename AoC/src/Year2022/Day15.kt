@@ -1,27 +1,28 @@
 package Year2022
 
+import Point
+import i
+import j
+import manhattanDistanceTo
 import readInput
 import kotlin.math.abs
 
 fun main() {
     val regex = Regex("Sensor at x=(-?\\d+), y=(-?\\d+): closest beacon is at x=(-?\\d+), y=(-?\\d+)")
-    fun Pair<Int, Int>.distanceTo(that: Pair<Int, Int>): Int {
-        return abs(this.first - that.first) + abs(this.second - that.second)
-    }
 
-    fun String.parse(): Pair<Pair<Int, Int>, Pair<Int, Int>> {
+    fun String.parse(): Pair<Point, Point> {
         val (sX, sY, bX, bY) = regex.find(this)!!.groupValues.drop(1).map(String::toInt)
         return Pair(sX, sY) to Pair(bX, bY)
     }
 
     fun part1(input: List<String>, level: Int): Int {
-        val covered = mutableSetOf<Pair<Int, Int>>()
+        val covered = mutableSetOf<Point>()
         input.forEach { line ->
             val (sensor, beacon) = line.parse()
-            val distance = sensor.distanceTo(beacon)
-            for (x in (sensor.first - distance)..(sensor.first + distance)) {
+            val distance = sensor.manhattanDistanceTo(beacon)
+            for (x in (sensor.i - distance)..(sensor.j + distance)) {
                 val point = Pair(x, level)
-                if (point != beacon && sensor.distanceTo(point) <= distance) {
+                if (point != beacon && sensor.manhattanDistanceTo(point) <= distance) {
                     covered.add(point)
                 }
             }
@@ -32,13 +33,13 @@ fun main() {
     fun part2(input: List<String>, maxLevel: Int): Long {
         val sensors = input.map { line ->
             val (sensor, beacon) = line.parse()
-            sensor to sensor.distanceTo(beacon)
-        }.sortedBy { (sensor, _) -> sensor.first }
+            sensor to (sensor.manhattanDistanceTo(beacon))
+        }.sortedBy { (sensor, _) -> sensor.i }
         for (y in 0..maxLevel) {
             var x = 0
             sensors.forEach { (sensor, distance) ->
-                if (sensor.distanceTo(Pair(x, y)) <= distance) {
-                    x = sensor.first + distance - abs(sensor.second - y) + 1
+                if ((sensor.manhattanDistanceTo(Point(x, y))) <= distance) {
+                    x = sensor.i + distance - abs(sensor.j - y) + 1
                 }
             }
             if (x <= maxLevel) {

@@ -1,5 +1,6 @@
 package Year2022
 
+import Point
 import readInput
 
 fun main() {
@@ -22,12 +23,12 @@ fun main() {
 
 private class HeightsGrid(
     val heights: Array<Array<Int>>,
-    val startPoint: Pair<Int, Int>,
-    val finishPoint: Pair<Int, Int>,
+    val startPoint: Point,
+    val finishPoint: Point,
 ) {
     private val rows: Int by lazy { heights.size }
     private val columns: Int by lazy { heights[0].size }
-    private operator fun Array<Array<Int>>.get(point: Pair<Int, Int>) = heights[point.first][point.second]
+    private operator fun Array<Array<Int>>.get(point: Point) = heights[point.first][point.second]
 
     fun countMinStepsFromS(): Int {
         val visited = countSteps()
@@ -39,11 +40,11 @@ private class HeightsGrid(
         return visited.filter { heights[it.key] == 0 }.minOf { it.value }
     }
 
-    private fun countSteps(): Map<Pair<Int, Int>, Int> {
-        val visited = mutableMapOf<Pair<Int, Int>, Int>()
-        val toVisit = ArrayDeque<Pair<Int, Int>>()
+    private fun countSteps(): Map<Point, Int> {
+        val visited = mutableMapOf<Point, Int>()
+        val toVisit = ArrayDeque<Point>()
 
-        fun addToVisit(point: Pair<Int, Int>, steps: Int) {
+        fun addToVisit(point: Point, steps: Int) {
             if (!visited.containsKey(point)) {
                 visited[point] = steps
                 toVisit.add(point)
@@ -72,8 +73,8 @@ private class HeightsGrid(
 
     companion object {
         fun parse(input: List<String>): HeightsGrid {
-            lateinit var finishPoint: Pair<Int, Int>
-            lateinit var startPoint: Pair<Int, Int>
+            lateinit var finishPoint: Point
+            lateinit var startPoint: Point
             val points = Array(input.size) { i ->
                 Array(input[i].length) { j ->
                     when (val c = input[i][j]) {

@@ -1,5 +1,6 @@
 package Year2022
 
+import Direction
 import readInput
 
 fun main() {
@@ -9,10 +10,10 @@ fun main() {
 
     fun Position.move(direction: Direction) {
         when (direction) {
-            Direction.L -> x--
-            Direction.U -> y++
-            Direction.R -> x++
-            Direction.D -> y--
+            Direction.Left -> x--
+            Direction.Up -> y++
+            Direction.Right -> x++
+            Direction.Down -> y--
         }
     }
 
@@ -106,5 +107,4 @@ fun main() {
 }
 
 private data class Command(val direction: Direction, val steps: Int)
-private enum class Direction { R, U, L, D, }
 private data class Position(var x: Int, var y: Int)

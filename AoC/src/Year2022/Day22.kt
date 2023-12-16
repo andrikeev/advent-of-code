@@ -1,6 +1,15 @@
 package Year2022
 
+import Direction
+import Point
+import Position
+import direction
+import i
+import j
+import point
 import readInput
+import turnLeft
+import turnRight
 import kotlin.collections.List
 import kotlin.collections.buildList
 import kotlin.collections.first
@@ -14,16 +23,29 @@ import kotlin.collections.toTypedArray
 
 fun main() {
 
+    fun Position.turnLeft(): Position = copy(second = direction.turnLeft())
+    fun Position.turnRight(): Position = copy(second = direction.turnRight())
+    fun Position.moveTo(point: Point): Position = copy(first = point)
+    fun Direction.value() = when (this) {
+        Direction.Right -> 0
+        Direction.Down -> 1
+        Direction.Left -> 2
+        Direction.Up -> 3
+    }
+    fun Position.calc(): Long {
+        return 1000L * (point.i + 1) + 4 * (point.j + 1) + direction.value()
+    }
+
     fun part1(input: List<String>): Long {
         val map = Map.parse(input.takeWhile(String::isNotBlank))
         val path = Path.parse(input.last())
-        val position = PathPosition(map.start(), StepDirection.start)
+        var position = Position(map.start(), Direction.Right)
 
         path.steps.forEach { step ->
-            when (step) {
+            position = when (step) {
                 is Step.LTurn -> position.turnLeft()
                 is Step.RTurn -> position.turnRight()
-                is Step.Move -> position.moveTo(map.step(position.position, position.direction, step.number))
+                is Step.Move -> position.moveTo(map.step(position.point, position.direction, step.number))
             }
         }
 
@@ -44,20 +66,20 @@ fun main() {
 }
 
 private class Map(private val tiles: Array<Array<Tile>>) {
-    fun start(): Pair<Int, Int> = 0 to tiles.first().indexOfFirst(Tile::isNotSpace)
+    fun start(): Point = 0 to tiles.first().indexOfFirst(Tile::isNotSpace)
 
     fun step(
-        start: Pair<Int, Int>,
-        direction: StepDirection,
+        start: Point,
+        direction: Direction,
         moves: Int,
-    ): Pair<Int, Int> {
+    ): Point {
         var (i, j) = start
         for (m in 0 until moves) {
             val nextPos = when (direction) {
-                StepDirection.Right -> nextRight(i to j)
-                StepDirection.Down -> nextDown(i to j)
-                StepDirection.Left -> nextLeft(i to j)
-                StepDirection.Up -> nextUp(i to j)
+                Direction.Right -> nextRight(i to j)
+                Direction.Down -> nextDown(i to j)
+                Direction.Left -> nextLeft(i to j)
+                Direction.Up -> nextUp(i to j)
             }
             val nextTile = get(nextPos)
             if (nextTile.isOpen) {
@@ -70,9 +92,9 @@ private class Map(private val tiles: Array<Array<Tile>>) {
         return i to j
     }
 
-    private fun get(pos: Pair<Int, Int>) = tiles[pos.first][pos.second]
+    private fun get(pos: Point) = tiles[pos.first][pos.second]
 
-    private fun nextLeft(from: Pair<Int, Int>): Pair<Int, Int> {
+    private fun nextLeft(from: Point): Point {
         var (i, j) = from
         val row = tiles[i]
         val rowSize = row.size
@@ -83,7 +105,7 @@ private class Map(private val tiles: Array<Array<Tile>>) {
         return i to j
     }
 
-    private fun nextUp(from: Pair<Int, Int>): Pair<Int, Int> {
+    private fun nextUp(from: Point): Point {
         var (i, j) = from
         val columnSize = tiles.size
         i = (columnSize + i - 1) % columnSize
@@ -93,7 +115,7 @@ private class Map(private val tiles: Array<Array<Tile>>) {
         return i to j
     }
 
-    private fun nextRight(from: Pair<Int, Int>): Pair<Int, Int> {
+    private fun nextRight(from: Point): Point {
         var (i, j) = from
         val row = tiles[i]
         val rowSize = row.size
@@ -104,7 +126,7 @@ private class Map(private val tiles: Array<Array<Tile>>) {
         return i to j
     }
 
-    private fun nextDown(from: Pair<Int, Int>): Pair<Int, Int> {
+    private fun nextDown(from: Point): Point {
         var (i, j) = from
         val columnSize = tiles.size
         i = (i + 1) % columnSize
@@ -169,54 +191,6 @@ private data class Path(val steps: List<Step>) {
 
 private sealed interface Step {
     data class Move(val number: Int) : Step
-    object RTurn : Step
-    object LTurn : Step
-}
-
-private enum class StepDirection {
-    Right, Down, Left, Up;
-
-    companion object {
-        val start = Right
-    }
-}
-
-private fun StepDirection.turnLeft() = when (this) {
-    StepDirection.Left -> StepDirection.Down
-    StepDirection.Up -> StepDirection.Left
-    StepDirection.Right -> StepDirection.Up
-    StepDirection.Down -> StepDirection.Right
-}
-
-private fun StepDirection.turnRight() = when (this) {
-    StepDirection.Left -> StepDirection.Up
-    StepDirection.Up -> StepDirection.Right
-    StepDirection.Right -> StepDirection.Down
-    StepDirection.Down -> StepDirection.Left
-}
-
-private class PathPosition(
-    start: Pair<Int, Int>,
-    direction: StepDirection,
-) {
-    var position: Pair<Int, Int> = start
-        private set
-    var direction: StepDirection = direction
-        private set
-
-    fun turnLeft() {
-        direction = direction.turnLeft()
-    }
-
-    fun turnRight() {
-        direction = direction.turnRight()
-    }
-
-    fun moveTo(position: Pair<Int, Int>) {
-        this.position = position
-    }
-
-    fun calc(): Long {
-        return 1000L * (position.first + 1) + 4 * (position.second + 1) + direction.ordinal
-    }
+    data object RTurn : Step
+    data object LTurn : Step
 }
