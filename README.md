@@ -2,7 +2,7 @@
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2023 - 32 ⭐
+  2023 - 38 ⭐
 </h1>
 <a href="AoC/src/Year2023/Day01.kt">
   <img src="Media/2023/01.png" width="161px">
@@ -51,6 +51,15 @@
 </a>
 <a href="AoC/src/Year2023/Day16.kt">
   <img src="Media/2023/16.png" width="161px">
+</a>
+<a href="AoC/src/Year2023/Day17.kt">
+  <img src="Media/2023/17.png" width="161px">
+</a>
+<a href="AoC/src/Year2023/Day18.kt">
+  <img src="Media/2023/18.png" width="161px">
+</a>
+<a href="AoC/src/Year2023/Day19.kt">
+  <img src="Media/2023/19.png" width="161px">
 </a>
 <h1 align="center">
   2022 - 45 ⭐
@@ -125,7 +134,7 @@
   <img src="Media/2022/23.png" width="161px">
 </a>
 <h1 align="center">
-  2021 - 20 ⭐
+  2021 - 22 ⭐
 </h1>
 <a href="AoC/src/Year2021/Day01/part1.kt">
   <img src="Media/2021/01.png" width="161px">
@@ -156,6 +165,9 @@
 </a>
 <a href="None">
   <img src="Media/2021/10.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day11.kt">
+  <img src="Media/2021/11.png" width="161px">
 </a>
 <!-- AOC TILES END -->
 

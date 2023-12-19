@@ -5,6 +5,7 @@ typealias Point = Pair<Int, Int>
 typealias Position = Pair<Point, Direction>
 typealias Position8 = Pair<Point, Direction8>
 typealias CharGrid = Array<CharArray>
+typealias IntGrid = Array<IntArray>
 
 fun readInput(name: String) =
     File("res", "$name.txt").readLines()
@@ -18,7 +19,17 @@ fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
     return Triple(grid, n, m)
 }
 
+fun List<String>.intGrid(): Triple<IntGrid, Int, Int> {
+    val grid = Array(size) { this[it].map(Char::digitToInt).toIntArray() }
+    val (n, m) = grid.gridSize()
+    return Triple(grid, n, m)
+}
+
 fun CharGrid.gridSize(): Pair<Int, Int> {
+    return size to first().size
+}
+
+fun IntGrid.gridSize(): Pair<Int, Int> {
     return size to first().size
 }
 
