@@ -1,5 +1,6 @@
 package Year2023
 
+import lcm
 import readInput
 import testInput
 
@@ -52,15 +53,6 @@ fun main() {
             }
             i = (i + 1) % rl.length
             s++
-        }
-
-
-        fun gcd(x: Long, y: Long): Long {
-            return if (y == 0L) x else gcd(y, x % y)
-        }
-
-        fun lcm(x: Long, y: Long): Long {
-            return x * y / gcd(x, y)
         }
 
         return loops.values.fold(1L) { acc, l -> lcm(acc, l.toLong()) }

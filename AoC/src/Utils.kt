@@ -132,3 +132,15 @@ fun Direction.turnRight() = when (this) {
 }
 
 enum class Direction8 { W, NW, N, NE, E, SE, S, SW; }
+
+fun gcd(x: Long, y: Long): Long {
+    return if (y == 0L) x else gcd(y, x % y)
+}
+
+fun lcm(x: Long, y: Long): Long {
+    return x * y / gcd(x, y)
+}
+
+fun lcm(values: List<Long>): Long {
+    return values.reduce { lcm, value -> lcm(lcm, value) }
+}
