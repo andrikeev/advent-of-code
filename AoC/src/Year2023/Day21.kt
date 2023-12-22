@@ -1,19 +1,24 @@
 package Year2023
 
+import CharGrid
 import Point
 import adjacentSides
 import charGrid
+import gridSize
 import readInput
 import testInput
 
 fun main() {
 
-    fun part1(input: List<String>, steps: Int = 64): Int {
-        val (grid, n, m) = input.charGrid()
-        val i = grid.indexOfFirst { 'S' in it }
-        val j = grid[i].indexOf('S')
-        val start = Point(i, j)
+    fun CharGrid.start(): Point {
+        return indexOfFirst { 'S' in it }.let { i ->
+            val j = this[i].indexOf('S')
+            Point(i, j)
+        }
+    }
 
+    fun CharGrid.count(start: Point, steps: Int): Int {
+        val (n, m) = gridSize()
         val toVisit = mutableListOf(start)
         repeat(steps) {
             val newToVisit = mutableSetOf<Point>()
@@ -21,7 +26,7 @@ fun main() {
                 val p = toVisit.removeFirst()
                 p.adjacentSides()
                     .filter { (i, j) -> i in 0 until n && j in 0 until m }
-                    .filter { (i, j) -> grid[i][j] != '#' }
+                    .filter { (i, j) -> this[i][j] != '#' }
                     .filterNot { it in toVisit }
                     .forEach(newToVisit::add)
             }
@@ -30,12 +35,52 @@ fun main() {
         return toVisit.size
     }
 
-    fun part2(input: List<String>, steps: Int = 26501365): Int {
-        TODO()
+    fun part1(input: List<String>, steps: Int = 64): Int {
+        val (grid) = input.charGrid()
+        val start = grid.start()
+        return grid.count(start, steps)
     }
 
-    val testInput = testInput(
-        """
+    fun part2(input: List<String>): Long {
+        val (grid, size) = input.charGrid()
+        val start = grid.start()
+        val steps = 26501365
+        val repeats = (steps / size) - 1
+
+        val odds = (1..(repeats / 2)).fold(1L) { acc, i -> acc + i * 8 }
+        val evens = (0..repeats / 2).fold(0L) { acc, i -> acc + i * 8 + 4 }
+
+        val oddCount = grid.count(start, size * 2 + 1)
+        val evenCount = grid.count(start, size * 2)
+
+        val topCorner = grid.count(start.copy(first = 0), size - 1)
+        val bottomCorner = grid.count(start.copy(first = size - 1), size - 1)
+        val leftCorner = grid.count(start.copy(second = 0), size - 1)
+        val rightCorner = grid.count(start.copy(second = size - 1), size - 1)
+
+        val smallCorners = (((repeats / 2 + 1) * 8 + 4) - 4) / 4
+        val smallTopRight = grid.count(Point(0, 0), size / 2 - 1)
+        val smallTopLeft = grid.count(Point(0, size - 1), size / 2 - 1)
+        val smallBottomRight = grid.count(Point(size - 1, 0), size / 2 - 1)
+        val smallBottomLeft = grid.count(Point(size - 1, size - 1), size / 2 - 1)
+
+        val largeCorners = (((repeats / 2 + 1) * 8 + 4) - 4) / 4 - 1
+        val largeTopRight = grid.count(Point(0, 0), size * 3 / 2 - 1)
+        val largeTopLeft = grid.count(Point(0, size - 1), size * 3 / 2 - 1)
+        val largeBottomRight = grid.count(Point(size - 1, 0), size * 3 / 2 - 1)
+        val largeBottomLeft = grid.count(Point(size - 1, size - 1), size * 3 / 2 - 1)
+
+        return odds * oddCount +
+                evens * evenCount +
+                topCorner +
+                bottomCorner +
+                leftCorner +
+                rightCorner +
+                smallCorners * (smallTopRight + smallTopLeft + smallBottomRight + smallBottomLeft) +
+                largeCorners * (largeTopRight + largeTopLeft + largeBottomRight + largeBottomLeft)
+    }
+
+    val testInput = testInput("""
         ...........
         .....###.#.
         .###.##..#.
@@ -47,14 +92,12 @@ fun main() {
         .##.#.####.
         .##..##.##.
         ...........
-    """.trimIndent()
-    )
+    """)
     check(part1(testInput, 6).also { println("part1 test: $it") } == 16)
-//    check(part2(testInput, 6).also { println("part2 test: $it") } == 16)
-//    check(part2(testInput, 10).also { println("part2 test: $it") } == 50)
-//    check(part2(testInput, 50).also { println("part2 test: $it") } == 1594)
+    // Not working on test input.
+    // check(part2(testInput, 6).also { println("part2 test: $it") } == 16L)
 
     val input = readInput("Year2023/Day21")
     println(part1(input))
-//    println(part2(input))
+    println(part2(input))
 }
