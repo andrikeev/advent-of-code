@@ -6,6 +6,7 @@ typealias Position = Pair<Point, Direction>
 typealias Position8 = Pair<Point, Direction8>
 typealias CharGrid = Array<CharArray>
 typealias IntGrid = Array<IntArray>
+typealias Grid<T> = Array<Array<T>>
 
 fun readInput(name: String) =
     File("res", "$name.txt").readLines()
@@ -30,6 +31,10 @@ fun CharGrid.gridSize(): Pair<Int, Int> {
 }
 
 fun IntGrid.gridSize(): Pair<Int, Int> {
+    return size to first().size
+}
+
+fun <T> Grid<T>.gridSize(): Pair<Int, Int> {
     return size to first().size
 }
 
