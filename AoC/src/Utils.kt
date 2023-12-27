@@ -1,5 +1,6 @@
 import java.io.File
 import kotlin.math.abs
+import kotlin.system.exitProcess
 
 typealias Point = Pair<Int, Int>
 typealias Position = Pair<Point, Direction>
@@ -13,6 +14,13 @@ fun readInput(name: String) =
 
 fun testInput(input: String) =
     input.trimIndent().lines()
+
+fun expect(actual: Any, expected: Any) {
+    if (actual != expected) {
+        println("Expected $expected, but was: $actual")
+        exitProcess(1)
+    }
+}
 
 fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
     val grid = Array(size) { this[it].toCharArray() }
