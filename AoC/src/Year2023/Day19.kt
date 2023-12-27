@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -105,7 +106,7 @@ fun main() {
         }.last()
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val workFlows = workflows(input)
         val parts = parts(input)
 
@@ -151,7 +152,7 @@ fun main() {
         return acc.sumOf { it.values.sum() }
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val workflows = workflows(input)
         val parts = "xmas".associate { it.toString() to 1..4000 }
         return evaluate(workflows, parts, "in")
@@ -182,11 +183,14 @@ fun main() {
         {x=2461,m=1339,a=466,s=291}
         {x=2127,m=1623,a=2188,s=1013}
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 19114)
-    check(part2(testInput).also { println("part2 test: $it") } == 167409079868000)
-
     val input = readInput("Year2023/Day19")
+
+    // part 1
+    expect(part1(testInput), 19114)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 167409079868000)
     println(part2(input))
 }
 

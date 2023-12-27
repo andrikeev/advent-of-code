@@ -4,6 +4,7 @@ import CharGrid
 import Point
 import adjacentSides
 import charGrid
+import expect
 import gridSize
 import readInput
 import testInput
@@ -35,13 +36,13 @@ fun main() {
         return toVisit.size
     }
 
-    fun part1(input: List<String>, steps: Int = 64): Int {
+    fun part1(input: List<String>, steps: Int = 64): Any {
         val (grid) = input.charGrid()
         val start = grid.start()
         return grid.count(start, steps)
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val (grid, size) = input.charGrid()
         val start = grid.start()
         val steps = 26501365
@@ -93,11 +94,14 @@ fun main() {
         .##..##.##.
         ...........
     """)
-    check(part1(testInput, 6).also { println("part1 test: $it") } == 16)
-    // Not working on test input.
-    // check(part2(testInput, 6).also { println("part2 test: $it") } == 16L)
-
     val input = readInput("Year2023/Day21")
+
+    // part 1
+    expect(part1(testInput, 6), 16)
     println(part1(input))
+
+    // part 2
+    // Not working on test input.
+    // expect(part2(testInput, 6), 16)
     println(part2(input))
 }

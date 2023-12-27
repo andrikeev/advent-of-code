@@ -2,6 +2,7 @@ package Year2023
 
 import Direction
 import Point
+import expect
 import i
 import j
 import moveTo
@@ -19,7 +20,7 @@ fun main() {
         return abs(square) / 2 + size / 2 + 1
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val loop = mutableListOf<Point>()
 
         var p = Point(0, 0)
@@ -40,7 +41,7 @@ fun main() {
         return loop.points().toInt()
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val loop = mutableListOf<Point>()
 
         var p = Point(0, 0)
@@ -79,10 +80,13 @@ fun main() {
         L 2 (#015232)
         U 2 (#7a21e3)
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 62)
-    check(part2(testInput).also { println("part2 test: $it") } == 952408144115)
-
     val input = readInput("Year2023/Day18")
+
+    // part 1
+    expect(part1(testInput), 62)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 952408144115)
     println(part2(input))
 }

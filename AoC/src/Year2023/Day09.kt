@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 import java.util.Currency
@@ -64,11 +65,11 @@ fun main() {
         return history.first().first()
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         return input.sumOf { extrapolate(it) }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         return input.sumOf { extrapolate2(it) }
     }
 
@@ -76,12 +77,14 @@ fun main() {
         0 3 6 9 12 15
         1 3 6 10 15 21
         10 13 16 21 30 45
-    """.trimIndent()
-    )
-    check(part1(testInput).also { println("part1 test: $it") } == 114)
-    check(part2(testInput).also { println("part2 test: $it") } == 2)
-
+    """)
     val input = readInput("Year2023/Day09")
+
+    // part 1
+    expect(part1(testInput), 114)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 2)
     println(part2(input))
 }

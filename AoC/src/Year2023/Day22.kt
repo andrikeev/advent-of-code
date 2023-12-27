@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -61,13 +62,13 @@ fun main() {
         return count
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val bricks = bricks(input)
         val stable = stabilize(bricks)
         return stable.count { countFalls(stable.minusElement(it)) == 0 }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val bricks = bricks(input)
         val stable = stabilize(bricks)
         return stable.sumOf { countFalls(stable.minusElement(it)) }
@@ -82,11 +83,14 @@ fun main() {
         0,1,6~2,1,6
         1,1,8~1,1,9
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 5)
-    check(part2(testInput).also { println("part2 test: $it") } == 7)
-
     val input = readInput("Year2023/Day22")
+
+    // part 1
+    expect(part1(testInput), 5)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 7)
     println(part2(input))
 }
 

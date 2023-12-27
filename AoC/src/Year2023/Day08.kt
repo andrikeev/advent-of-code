@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import lcm
 import readInput
 import testInput
@@ -12,7 +13,7 @@ fun main() {
         start to (left to right)
     }.associateBy({ it.first }, { it.second })
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val rl = input.first()
         val map = readMap(input.drop(2))
 
@@ -31,7 +32,7 @@ fun main() {
         return s
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val rl = input.first()
         val map = readMap(input.drop(2))
         var i = 0
@@ -58,8 +59,7 @@ fun main() {
         return loops.values.fold(1L) { acc, l -> lcm(acc, l.toLong()) }
     }
 
-    val testInput = testInput(
-        """
+    val testInput = testInput("""
         RL
 
         AAA = (BBB, CCC)
@@ -69,11 +69,15 @@ fun main() {
         EEE = (EEE, EEE)
         GGG = (GGG, GGG)
         ZZZ = (ZZZ, ZZZ)
-    """.trimIndent()
-    )
-    check(part1(testInput).also { println("part1 test: $it") } == 2)
-    val testInput2 = testInput(
-        """
+    """)
+    val input = readInput("Year2023/Day08")
+
+    // part 1
+    expect(part1(testInput), 2)
+    println(part1(input))
+
+    // part 2
+    val testInput2 = testInput("""
         LR
 
         11A = (11B, XXX)
@@ -84,11 +88,7 @@ fun main() {
         22C = (22Z, 22Z)
         22Z = (22B, 22B)
         XXX = (XXX, XXX)
-    """.trimIndent()
-    )
-    check(part2(testInput2).also { println("part2 test: $it") } == 6L)
-
-    val input = readInput("Year2023/Day08")
-    println(part1(input))
+    """)
+    expect(part2(testInput2), 6L)
     println(part2(input))
 }

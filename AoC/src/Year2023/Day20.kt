@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import lcm
 import readInput
 import testInput
@@ -93,7 +94,7 @@ fun main() {
         return high to low
     }
 
-    fun part1(input: List<String>): Long {
+    fun part1(input: List<String>): Any {
         val modules = modules(input)
         var high = 0L
         var low = 0L
@@ -105,7 +106,7 @@ fun main() {
         return high * low
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val modules = modules(input)
 
         val rxInput = modules.values.single { Rx.name in it.connections }
@@ -134,9 +135,12 @@ fun main() {
         %c -> inv
         &inv -> a
     """)
-    check(part1(testInput1).also { println("part1 test: $it") } == 32000000L)
-
     val input = readInput("Year2023/Day20")
+
+    // part 1
+    expect(part1(testInput1), 32000000L)
+
+    // part 2
     println(part1(input))
     println(part2(input))
 }

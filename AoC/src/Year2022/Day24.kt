@@ -5,6 +5,7 @@ import Point
 import Position
 import adjacentSides
 import direction
+import expect
 import i
 import j
 import point
@@ -117,10 +118,11 @@ fun main() {
         #<^v^^>#
         ######.#
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 18)
-    check(part2(testInput).also { println("part2 test: $it") } == 54)
-
     val input = readInput("Year2022/Day24")
+
+    expect(part1(testInput), 18)
     println(part1(input))
+
+    expect(part2(testInput), 54)
     println(part2(input))
 }

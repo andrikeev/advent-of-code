@@ -6,7 +6,7 @@ import testInput
 
 fun main() {
 
-    fun part1(input: List<String>) = buildString {
+    fun solution(input: List<String>) = buildString {
         var n = input.sumOf { line ->
             line.fold(0L) { k, c ->
                 5 * k + when (c) {
@@ -23,8 +23,7 @@ fun main() {
         reverse()
     }
 
-    val testInput = testInput(
-        """
+    val testInput = testInput("""
         1=-0-2
         12111
         2=0=
@@ -38,9 +37,10 @@ fun main() {
         12
         1=
         122
-    """.trimIndent()
-    )
-    val input by lazy { readInput("Year2022/Day25") }
-    expect(part1(testInput), "2=-1=0")
-    println(part1(input))
+    """)
+    val input = readInput("Year2022/Day25")
+
+    // solution
+    expect(solution(testInput), "2=-1=0")
+    println(solution(input))
 }

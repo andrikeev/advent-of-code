@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 import kotlin.math.roundToLong
@@ -54,7 +55,7 @@ fun main() {
     fun part1(
         input: List<String>,
         range: LongRange = 7L..27L,
-    ): Int {
+    ): Any {
         val hails = hailstones(input)
         var res = 0
         for (i in 0..hails.lastIndex) {
@@ -69,7 +70,7 @@ fun main() {
         return res
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val hailstones = hailstones(input)
 
         //
@@ -191,10 +192,13 @@ fun main() {
         12, 31, 28 @ -1, -2, -1
         20, 19, 15 @  1, -5, -3
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 2)
-    check(part2(testInput).also { println("part2 test: $it") } == 47L)
-
     val input = readInput("Year2023/Day24")
+
+    // part 1
+    expect(part1(testInput), 2)
     println(part1(input, 200000000000000L..400000000000000L))
+
+    // part 2
+    expect(part2(testInput), 47L)
     println(part2(input))
 }

@@ -1,12 +1,13 @@
 package Year2023
 
 import charGrid
+import expect
 import readInput
 import testInput
 
 fun main() {
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val (grid, n, m) = input.charGrid()
 
         var res = 0
@@ -31,7 +32,7 @@ fun main() {
         return res
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val (grid, n, m) = input.charGrid()
 
         fun cycle() {
@@ -128,10 +129,13 @@ fun main() {
         #....###..
         #OO..#....
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 136)
-    check(part2(testInput).also { println("part2 test: $it") } == 64)
-
     val input = readInput("Year2023/Day14")
+
+    // part 1
+    expect(part1(testInput), 136)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 64)
     println(part2(input))
 }

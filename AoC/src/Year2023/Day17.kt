@@ -2,6 +2,7 @@ package Year2023
 
 import Direction
 import Point
+import expect
 import i
 import intGrid
 import j
@@ -82,10 +83,13 @@ fun main() {
         2546548887735
         4322674655533
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 102)
-    check(part2(testInput).also { println("part2 test: $it") } == 94)
-
     val input = readInput("Year2023/Day17")
+
+    // part 1
+    expect(part1(testInput), 102)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 94)
     println(part2(input))
 }

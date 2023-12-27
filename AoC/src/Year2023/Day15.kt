@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 
 fun main() {
@@ -8,7 +9,7 @@ fun main() {
 
     fun part1(input: String) = input.split(",").sumOf(String::hash)
 
-    fun part2(input: String): Int {
+    fun part2(input: String): Any {
         val boxes = Array<MutableList<Pair<String, Int>>>(256) { mutableListOf() }
         input.split(",").forEach { command ->
             if (command.contains('-')) {
@@ -35,10 +36,13 @@ fun main() {
     }
 
     val testInput = "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7"
-    check(part1(testInput).also { println("part1 test: $it") } == 1320)
-    check(part2(testInput).also { println("part2 test: $it") } == 145)
-
     val input = readInput("Year2023/Day15")
+
+    // part 1
+    expect(part1(testInput), 1320)
     println(part1(input.first()))
+
+    // part 2
+    expect(part2(testInput), 145)
     println(part2(input.first()))
 }

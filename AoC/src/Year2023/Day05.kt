@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -76,13 +77,13 @@ fun main() {
     }
 
 
-    fun part1(input: List<String>): Long {
+    fun part1(input: List<String>): Any {
         val seeds = readSeeds(input.first())
         val steps = readConverters(input.drop(2))
         return seeds.minOf { seed -> seed.convert(steps) }
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         val seeds = readSeedsRanges(input.first())
         val steps = readConverters(input.drop(2))
         return seeds.convert(steps).minOf { it.first }
@@ -122,12 +123,15 @@ fun main() {
         humidity-to-location map:
         60 56 37
         56 93 4
-    """.trimIndent())
-    check(part1(testInput).also { println("part1 test: $it") } == 35L)
-    check(part2(testInput).also { println("part2 test: $it") } == 46L)
-
+    """)
     val input = readInput("Year2023/Day05")
+
+    // part 1
+    expect(part1(testInput), 35L)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 46L)
     println(part2(input))
 }
 

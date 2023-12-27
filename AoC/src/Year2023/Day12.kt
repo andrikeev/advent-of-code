@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -41,14 +42,14 @@ fun main() {
         return result
     }
 
-    fun part1(input: List<String>): Long {
+    fun part1(input: List<String>): Any {
         return input.sumOf {
             val (f, s) = it.split(' ')
             count(f, s.split(',').map(String::toInt))
         }
     }
 
-    fun part2(input: List<String>): Long {
+    fun part2(input: List<String>): Any {
         return input.sumOf {
             val (f, s) = it.split(' ')
             count(
@@ -65,11 +66,14 @@ fun main() {
         ????.#...#... 4,1,1
         ????.######..#####. 1,6,5
         ?###???????? 3,2,1
-    """.trimIndent())
-    check(part1(testInput).also { println("part1 test: $it") } == 21L)
-    check(part2(testInput).also { println("part2 test: $it") } == 525152L)
-
+    """)
     val input = readInput("Year2023/Day12")
+
+    // part 1
+    expect(part1(testInput), 21L)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 525152L)
     println(part2(input))
 }

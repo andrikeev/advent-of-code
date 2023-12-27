@@ -5,6 +5,7 @@ import Direction
 import Point
 import Position
 import charGrid
+import expect
 import gridSize
 import i
 import j
@@ -74,7 +75,7 @@ fun main() {
         return visited.distinctBy(Position::point).size
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         return count(
             input.charGrid().first,
             Point(0, 0),
@@ -82,7 +83,7 @@ fun main() {
         )
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val (grid, n, m) = input.charGrid()
         var res = 0
 
@@ -111,10 +112,13 @@ fun main() {
         .|....-|.\
         ..//.|....
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 46)
-    check(part2(testInput).also { println("part2 test: $it") } == 51)
-
     val input = readInput("Year2023/Day16")
+
+    // part 1
+    expect(part1(testInput), 46)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 51)
     println(part2(input))
 }

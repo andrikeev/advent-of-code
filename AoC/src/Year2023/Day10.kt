@@ -6,6 +6,7 @@ import above
 import adjacent
 import adjacentSides
 import below
+import expect
 import i
 import j
 import leftTo
@@ -66,7 +67,7 @@ fun main() {
 
     fun part1(input: List<String>) = map(input).loop().size / 2
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val map = map(input)
         val loop = map.loop()
 
@@ -110,9 +111,14 @@ fun main() {
         SJ.L7
         |F--J
         LJ...
-    """.trimIndent())
-    check(part1(testInput).also { println("part1 test: $it") } == 8)
+    """)
+    val input = readInput("Year2023/Day10")
 
+    // part 1
+    expect(part1(testInput), 8)
+    println(part1(input))
+
+    // part 2
     val testInput2 = testInput("""
         ...........
         .S-------7.
@@ -123,9 +129,8 @@ fun main() {
         .|II|O|II|.
         .L--JOL--J.
         .....O.....
-    """.trimIndent())
-    check(part2(testInput2).also { println("part2 test: $it") } == 4)
-
+    """)
+    expect(part2(testInput2), 4)
     val testInput3 = testInput("""
         ..........
         .S------7.
@@ -137,9 +142,6 @@ fun main() {
         .L--JL--J.
         ..........
     """)
-    check(part2(testInput3).also { println("part2 test: $it") } == 4)
-
-    val input = readInput("Year2023/Day10")
-    println(part1(input))
+    expect(part2(testInput3), 4)
     println(part2(input))
 }

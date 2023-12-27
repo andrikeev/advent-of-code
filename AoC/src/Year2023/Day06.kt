@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 import kotlin.math.roundToInt
@@ -7,7 +8,7 @@ import kotlin.math.sqrt
 
 fun main() {
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val (times, distances) = input.map { line ->
             line.substringAfter(":").split(" ").filter(String::isNotBlank).map(String::toInt)
         }
@@ -19,7 +20,7 @@ fun main() {
         }.reduce { acc, i -> acc * i }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val (time, distance) = input.map { line ->
             line.substringAfter(":").replace(" ", "").toLong()
         }
@@ -29,11 +30,14 @@ fun main() {
     val testInput = testInput("""
         Time:      7  15   30
         Distance:  9  40  200
-    """.trimIndent())
-    check(part1(testInput).also { println("part1 test: $it") } == 288)
-    check(part2(testInput).also { println("part2 test: $it") } == 71503)
-
+    """)
     val input = readInput("Year2023/Day06")
+
+    // part 1
+    expect(part1(testInput), 288)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 71503)
     println(part2(input))
 }

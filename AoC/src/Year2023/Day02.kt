@@ -1,10 +1,12 @@
 package Year2023
 
+import expect
 import readInput
+import testInput
 
 fun main() {
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val r = 12
         val g = 13
         val b = 14
@@ -35,7 +37,7 @@ fun main() {
         }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         return input.sumOf { line ->
             var r = 0
             var g = 0
@@ -58,11 +60,20 @@ fun main() {
         }
     }
 
-    val testInput = readInput("Year2023/Day02_test")
-    check(part1(testInput).also { println("part1 test: $it") } == 8)
-    check(part2(testInput).also { println("part2 test: $it") } == 2286)
-
+    val testInput = testInput("""
+        Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+        Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+        Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+        Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+        Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
+    """)
     val input = readInput("Year2023/Day02")
+
+    // part 1
+    expect(part1(testInput), 8)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 2286)
     println(part2(input))
 }

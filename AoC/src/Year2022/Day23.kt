@@ -2,6 +2,7 @@ package Year2022
 
 import Direction8
 import Point
+import expect
 import i
 import j
 import readInput
@@ -108,8 +109,7 @@ fun main() {
         return step + 1
     }
 
-    val testInput = testInput(
-        """
+    val testInput = testInput("""
         ....#..
         ..###.#
         #...#.#
@@ -117,13 +117,13 @@ fun main() {
         #.###..
         ##.#.##
         .#..#..
-        """
-    )
-    check(part1(testInput).also { println("part1 test: $it") } == 110)
-    check(part2(testInput).also { println("part2 test: $it") } == 20)
-
+    """)
     val input = readInput("Year2022/Day23")
+
+    expect(part1(testInput), 110)
     println(part1(input))
+
+    expect(part2(testInput), 20)
     println(part2(input))
 }
 

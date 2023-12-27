@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 import kotlin.math.pow
@@ -20,11 +21,11 @@ fun main() {
         return win.intersect(my.toSet()).size
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         return input.sumOf { line -> 2.0.pow(cardPoints(line) - 1.0).toInt() }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val copies = mutableMapOf<Int, Int>()
         input.forEachIndexed { i, line ->
             copies[i] = copies.getOrDefault(i, 0) + 1
@@ -45,10 +46,13 @@ fun main() {
         Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
         Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 13)
-    check(part2(testInput).also { println("part2 test: $it") } == 30)
-
     val input = readInput("Year2023/Day04")
+
+    // part 1
+    expect(part1(testInput), 13)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 30)
     println(part2(input))
 }

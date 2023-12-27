@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -55,7 +56,7 @@ fun main() {
         .mapIndexed { i, (_, _, bid) -> (i + 1) * bid }
         .sum()
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         return input
             .map {
                 val (hand, bid) = it.split(" ")
@@ -64,7 +65,7 @@ fun main() {
             .rank()
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         return input
             .map {
                 val (hand, bid) = it.split(" ")
@@ -73,20 +74,21 @@ fun main() {
             .rank()
     }
 
-    val testInput = testInput(
-        """
+    val testInput = testInput("""
         32T3K 765
         T55J5 684
         KK677 28
         KTJJT 220
         QQQJA 483
-    """.trimIndent()
-    )
-    check(part1(testInput).also { println("part1 test: $it") } == 6440)
-    check(part2(testInput).also { println("part2 test: $it") } == 5905)
-
+    """)
     val input = readInput("Year2023/Day07")
+
+    // part 1
+    expect(part1(testInput), 6440)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 5905)
     println(part2(input))
 }
 

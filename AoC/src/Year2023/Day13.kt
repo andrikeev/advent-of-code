@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -53,13 +54,13 @@ fun main() {
         }
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         return patterns(input).sumOf { pattern ->
             rows(pattern).sumOf { it * 100 } + cols(pattern).sum()
         }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         fun List<String>.swap(i: Int, j: Int): List<String> {
             val list = Array(size) { get(it).toCharArray() }
             list[i][j] = if (list[i][j] == '.') '#' else '.'
@@ -109,11 +110,14 @@ fun main() {
         #####.##.
         ..##..###
         #....#..#
-    """.trimIndent())
-    check(part1(testInput).also { println("part1 test: $it") } == 405)
-    check(part2(testInput).also { println("part2 test: $it") } == 400)
-
+    """)
     val input = readInput("Year2023/Day13")
+
+    // part 1
+    expect(part1(testInput), 405)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 400)
     println(part2(input))
 }

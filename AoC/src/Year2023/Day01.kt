@@ -1,16 +1,18 @@
 package Year2023
 
+import expect
 import readInput
+import testInput
 
 fun main() {
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         return input.sumOf { line ->
             line.first(Char::isDigit).digitToInt() * 10 + line.last(Char::isDigit).digitToInt()
         }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val numbers = listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
         return input.sumOf { line ->
             var first = 0
@@ -46,12 +48,28 @@ fun main() {
         }
     }
 
-    val testInput1 = readInput("Year2023/Day01_test1")
-    check(part1(testInput1).also { println("part1 test: $it") } == 142)
-    val testInput2 = readInput("Year2023/Day01_test2")
-    check(part2(testInput2).also { println("part2 test: $it") } == 281)
-
+    val testInput1 = testInput("""
+        1abc2
+        pqr3stu8vwx
+        a1b2c3d4e5f
+        treb7uchet
+    """)
     val input = readInput("Year2023/Day01")
+
+    // part 1
+    expect(part1(testInput1), 142)
     println(part1(input))
+
+    // part 2
+    val testInput2 = testInput("""
+        two1nine
+        eightwothree
+        abcone2threexyz
+        xtwone3four
+        4nineeightseven2
+        zoneight234
+        7pqrstsixteen
+    """)
+    expect(part2(testInput2), 281)
     println(part2(input))
 }

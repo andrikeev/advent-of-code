@@ -1,5 +1,6 @@
 package Year2023
 
+import expect
 import readInput
 import testInput
 
@@ -31,7 +32,7 @@ fun main() {
         }
     }
 
-    fun part1(input: List<String>): Int {
+    fun solution(input: List<String>): Any {
         val nodes = mutableSetOf<String>()
         val edges = mutableSetOf<Pair<String, String>>()
         input.forEach { line ->
@@ -63,8 +64,9 @@ fun main() {
         rzs: qnr cmg lsr rsh
         frs: qnr lhk lsr
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 54)
-
     val input = readInput("Year2023/Day25")
-    println(part1(input))
+
+    // solution
+    expect(solution(testInput), 54)
+    println(solution(input))
 }

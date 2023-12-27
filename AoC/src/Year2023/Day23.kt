@@ -4,6 +4,7 @@ import CharGrid
 import Direction
 import Point
 import charGrid
+import expect
 import gridSize
 import i
 import j
@@ -54,7 +55,7 @@ fun main() {
         return distances.maxOrNull() ?: -1
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Any {
         val (grid, n, m) = input.charGrid()
         val start = Point(0, 1)
         val finish = Point(n - 1, m - 2)
@@ -62,7 +63,7 @@ fun main() {
         return findPath(grid, start, finish, mutableSetOf(start), 0)
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Any {
         val (grid, n, m) = input.charGrid()
         val start = Point(0, 1)
         val finish = Point(n - 1, m - 2)
@@ -95,10 +96,13 @@ fun main() {
         #.....###...###...#...#
         #####################.#
     """)
-    check(part1(testInput).also { println("part1 test: $it") } == 94)
-    check(part2(testInput).also { println("part2 test: $it") } == 154)
-
     val input = readInput("Year2023/Day23")
+
+    // part 1
+    expect(part1(testInput), 94)
     println(part1(input))
+
+    // part 2
+    expect(part2(testInput), 154)
     println(part2(input))
 }
