@@ -17,8 +17,7 @@ fun testInput(input: String) =
 
 fun expect(actual: Any, expected: Any) {
     if (actual != expected) {
-        println("Expected $expected, but was: $actual")
-        exitProcess(1)
+        error("Expected $expected, but was: $actual")
     }
 }
 
