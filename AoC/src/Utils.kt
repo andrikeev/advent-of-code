@@ -16,9 +16,7 @@ fun testInput(input: String) =
     input.trimIndent().lines()
 
 fun expect(actual: Any, expected: Any) {
-    if (actual != expected) {
-        error("Expected $expected, but was: $actual")
-    }
+    check(actual == expected) { "Expected $expected, but was: $actual" }
 }
 
 fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
