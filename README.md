@@ -158,7 +158,7 @@
   <img src="Media/2022/25.png" width="161px">
 </a>
 <h1 align="center">
-  2021 - 36 ⭐
+  2021 - 38 ⭐
 </h1>
 <a href="AoC/src/Year2021/Day01/part1.kt">
   <img src="Media/2021/01.png" width="161px">
@@ -213,6 +213,12 @@
 </a>
 <a href="AoC/src/Year2021/Day18.kt">
   <img src="Media/2021/18.png" width="161px">
+</a>
+<a href="None">
+  <img src="Media/2021/19.png" width="161px">
+</a>
+<a href="AoC/src/Year2021/Day20.kt">
+  <img src="Media/2021/20.png" width="161px">
 </a>
 <!-- AOC TILES END -->
 
