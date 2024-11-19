@@ -226,6 +226,12 @@
 <a href="AoC/src/Year2021/Day22.kt">
   <img src="Media/2021/22.png" width="161px">
 </a>
+<h1 align="center">
+  2015 - 2 ⭐
+</h1>
+<a href="AoC/src/Year2015/Day01.kt">
+  <img src="Media/2015/01.png" width="161px">
+</a>
 <!-- AOC TILES END -->
 
 ---
