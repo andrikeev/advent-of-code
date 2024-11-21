@@ -227,7 +227,7 @@
   <img src="Media/2021/22.png" width="161px">
 </a>
 <h1 align="center">
-  2015 - 6 ⭐
+  2015 - 8 ⭐
 </h1>
 <a href="AoC/src/Year2015/Day01.kt">
   <img src="Media/2015/01.png" width="161px">
@@ -237,6 +237,9 @@
 </a>
 <a href="AoC/src/Year2015/Day03.kt">
   <img src="Media/2015/03.png" width="161px">
+</a>
+<a href="AoC/src/Year2015/Day04.kt">
+  <img src="Media/2015/04.png" width="161px">
 </a>
 <!-- AOC TILES END -->
 

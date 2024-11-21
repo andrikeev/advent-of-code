@@ -1,4 +1,6 @@
 import java.io.File
+import java.math.BigInteger
+import java.security.MessageDigest
 import kotlin.math.abs
 import kotlin.system.exitProcess
 
@@ -153,4 +155,9 @@ fun lcm(x: Long, y: Long): Long {
 
 fun lcm(values: List<Long>): Long {
     return values.reduce { lcm, value -> lcm(lcm, value) }
+}
+
+fun String.md5(): String {
+    val md = MessageDigest.getInstance("MD5")
+    return BigInteger(1, md.digest(toByteArray())).toString(16).padStart(32, '0')
 }
