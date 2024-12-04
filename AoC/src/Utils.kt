@@ -18,7 +18,28 @@ fun testInput(input: String) =
     input.trimIndent().lines()
 
 fun expect(actual: Any, expected: Any) {
-    check(actual == expected) { "Expected $expected, but was: $actual" }
+    if (actual != expected) {
+        System.err.println(
+            """
+                Test failed
+                Expected: $expected
+                But was:  $actual
+            """.trimIndent(),
+        )
+        exitProcess(1)
+    }
+}
+
+interface Day {
+    private val input: List<String>
+        get() = readInput(this::class.qualifiedName.orEmpty().replace('.', '/'))
+
+    fun part1(input: List<String>): Any
+    fun part2(input: List<String>): Any
+    fun test1(input: String, expected: Any) = expect(part1(testInput(input)), expected)
+    fun test2(input: String, expected: Any) = expect(part2(testInput(input)), expected)
+    fun result1() = println("Part 1: ${part1(input)}")
+    fun result2() = println("Part 2: ${part2(input)}")
 }
 
 fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
