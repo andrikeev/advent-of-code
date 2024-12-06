@@ -48,6 +48,29 @@ fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
     return Triple(grid, n, m)
 }
 
+inline fun CharGrid.firstOrThrow(predicate: (Char, Int, Int) -> Boolean): Triple<Char, Int, Int> {
+    forEach { c, i, j ->
+        if (predicate(c, i, j)) {
+            return Triple(c, i, j)
+        }
+    }
+    error("No element matches the predicate")
+}
+
+inline fun CharGrid.forEach(action: (Char, Int, Int) -> Unit) {
+    val (n, m) = gridSize()
+    for (i in 0..<n) {
+        for (j in 0..<m) {
+            action(this[i][j], i, j)
+        }
+    }
+}
+
+operator fun CharGrid.get(point: Point): Char {
+    require(point inside this)
+    return this[point.i][point.j]
+}
+
 fun List<String>.intGrid(): Triple<IntGrid, Int, Int> {
     val grid = Array(size) { this[it].map(Char::digitToInt).toIntArray() }
     val (n, m) = grid.gridSize()
@@ -71,6 +94,11 @@ val Point.i
 
 val Point.j
     get() = second
+
+infix fun Point.inside(grid: CharGrid): Boolean {
+    val (n, m) = grid.gridSize()
+    return i in 0..<n && j in 0..<m
+}
 
 fun Point.moveBy(i: Int = 0, j: Int = 0): Point {
     return copy(first + i, second + j)
