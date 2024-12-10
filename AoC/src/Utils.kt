@@ -66,7 +66,21 @@ inline fun CharGrid.forEach(action: (Char, Int, Int) -> Unit) {
     }
 }
 
+inline fun IntGrid.forEach(action: (Int, Int, Int) -> Unit) {
+    val (n, m) = gridSize()
+    for (i in 0..<n) {
+        for (j in 0..<m) {
+            action(this[i][j], i, j)
+        }
+    }
+}
+
 operator fun CharGrid.get(point: Point): Char {
+    require(point inside this)
+    return this[point.i][point.j]
+}
+
+operator fun IntGrid.get(point: Point): Int {
     require(point inside this)
     return this[point.i][point.j]
 }
@@ -96,6 +110,11 @@ val Point.j
     get() = second
 
 infix fun Point.inside(grid: CharGrid): Boolean {
+    val (n, m) = grid.gridSize()
+    return i in 0..<n && j in 0..<m
+}
+
+infix fun Point.inside(grid: IntGrid): Boolean {
     val (n, m) = grid.gridSize()
     return i in 0..<n && j in 0..<m
 }
