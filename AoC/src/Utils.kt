@@ -57,6 +57,15 @@ inline fun CharGrid.firstOrThrow(predicate: (Char, Int, Int) -> Boolean): Triple
     error("No element matches the predicate")
 }
 
+inline fun CharGrid.firstPosition(predicate: (Char) -> Boolean): Point {
+    forEach { c, i, j ->
+        if (predicate(c)) {
+            return Point(i, j)
+        }
+    }
+    error("No element matches the predicate")
+}
+
 inline fun CharGrid.forEach(action: (Char, Int, Int) -> Unit) {
     val (n, m) = gridSize()
     for (i in 0..<n) {
@@ -75,9 +84,22 @@ inline fun IntGrid.forEach(action: (Int, Int, Int) -> Unit) {
     }
 }
 
+fun CharGrid(n: Int, m: Int, init: (Int, Int) -> Char): CharGrid {
+    return Array(n) { i ->
+        CharArray(m) { j ->
+            init(i, j)
+        }
+    }
+}
+
 operator fun CharGrid.get(point: Point): Char {
     require(point inside this)
     return this[point.i][point.j]
+}
+
+operator fun CharGrid.set(point: Point, c: Char) {
+    require(point inside this)
+    this[point.i][point.j] = c
 }
 
 operator fun IntGrid.get(point: Point): Int {
