@@ -93,7 +93,7 @@ fun CharGrid(n: Int, m: Int, init: (Int, Int) -> Char): CharGrid {
 }
 
 operator fun CharGrid.get(point: Point): Char {
-    require(point inside this)
+    require(point inside this) { "Point $point is out of grid bounds ${gridSize()}" }
     return this[point.i][point.j]
 }
 
