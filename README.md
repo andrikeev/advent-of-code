@@ -52,6 +52,9 @@
 <a href="AoC/src/Year2024/Day16.kt">
   <img src="Media/2024/16.png" width="161px">
 </a>
+<a href="AoC/src/Year2024/Day17.kt">
+  <img src="Media/2024/17.png" width="161px">
+</a>
 <h1 align="center">
   2023 - 50 ⭐
 </h1>
