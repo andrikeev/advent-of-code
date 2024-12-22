@@ -247,6 +247,28 @@ fun lcm(values: List<Long>): Long {
     return values.reduce { lcm, value -> lcm(lcm, value) }
 }
 
+inline fun <T, R> bfs(
+    start: T,
+    next: (T) -> List<T>,
+    key: (T) -> R,
+    visit: (T) -> Unit,
+    finished: (T) -> Boolean = { false },
+) {
+    val toVisit = ArrayDeque<T>().apply { add(start) }
+    val visited = mutableSetOf<R>()
+    while (toVisit.isNotEmpty()) {
+        val current = toVisit.removeFirst()
+        if (key(current) !in visited) {
+            visited.add(key(current))
+            visit(current)
+            if (finished(current)) {
+                return
+            }
+            toVisit.addAll(next(current))
+        }
+    }
+}
+
 fun String.md5(): String {
     val md = MessageDigest.getInstance("MD5")
     return BigInteger(1, md.digest(toByteArray())).toString(16).padStart(32, '0')
