@@ -42,6 +42,23 @@ interface Day {
     fun result2() = println("Part 2: ${part2(input)}")
 }
 
+fun List<String>.split(predicate: (String) -> Boolean): List<List<String>> {
+    return buildList {
+        var current = mutableListOf<String>()
+        this@split.forEach { line ->
+            if (predicate(line)) {
+                add(current.toList())
+                current = mutableListOf()
+            } else {
+                current.add(line)
+            }
+        }
+        if (current.isNotEmpty()) {
+            add(current.toList())
+        }
+    }
+}
+
 fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
     val grid = Array(size) { this[it].toCharArray() }
     val (n, m) = grid.gridSize()
