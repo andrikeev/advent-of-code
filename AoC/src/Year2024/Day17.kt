@@ -14,28 +14,36 @@ private object Day17 : Day {
         private var pointer = 0
         private val output = mutableListOf<Int>()
 
-        fun reset(a: Long) {
-            this.a = a
+        fun run(): List<Int> {
+            while (pointer < program.size) {
+                runOp()
+            }
+            return output
+        }
+
+        fun runSingleLoop(registerA: Long): Int {
+            a = registerA
             pointer = 0
             output.clear()
+            while (output.isEmpty()) {
+                runOp()
+            }
+            return output.single()
         }
 
         @Suppress("ReplaceWithOperatorAssignment")
-        fun run(): List<Int> {
-            while (pointer < program.size) {
-                val (opcode, operand) = program[pointer++]
-                when (opcode) {
-                    0 -> a = a / 1.shl(combo(operand).toInt())
-                    1 -> b = b xor operand.toLong()
-                    2 -> b = combo(operand) % 8
-                    3 -> if (a != 0L) pointer = operand
-                    4 -> b = b xor c
-                    5 -> output.add((combo(operand) % 8).toInt())
-                    6 -> b = a / 1.shl(combo(operand).toInt())
-                    7 -> c = a / 1.shl(combo(operand).toInt())
-                }
+        private fun runOp() {
+            val (opcode, operand) = program[pointer++]
+            when (opcode) {
+                0 -> a = a / 1.shl(combo(operand).toInt())
+                1 -> b = b xor operand.toLong()
+                2 -> b = combo(operand) % 8
+                3 -> if (a != 0L) pointer = operand
+                4 -> b = b xor c
+                5 -> output.add((combo(operand) % 8).toInt())
+                6 -> b = a / 1.shl(combo(operand).toInt())
+                7 -> c = a / 1.shl(combo(operand).toInt())
             }
-            return output
         }
 
         private fun combo(operand: Int): Long {
@@ -81,18 +89,18 @@ private object Day17 : Day {
                 .map { (opcode, operand) -> Command(opcode, operand) },
         )
 
-        val aRange = LongRange(1L shl 45, 1L shl 48)
-        var a = aRange.first
-        while (a < aRange.last) {
-            device.reset(a)
-            val result = device.run()
-            if (result == program) {
-                return a
-            } else {
-                a++
-            }
+        val range = (0L..7L)
+        var possibleA = range.toList()
+        for (i in program.reversed().dropLast(1)) {
+            possibleA = possibleA
+                .filter { device.runSingleLoop(it) == i }
+                .flatMap { range.map { j -> (it shl 3) + j } }
+                .distinct()
         }
-        error("It is not possible for the given program")
+
+        return possibleA
+            .filter { device.runSingleLoop(it) == program.first() }
+            .min()
     }
 }
 
@@ -109,5 +117,15 @@ fun main() = with(Day17) {
     )
     result1()
 
+    test2(
+        input = """
+            Register A: 2024
+            Register B: 0
+            Register C: 0
+
+            Program: 0,3,5,4,3,0
+        """.trimIndent(),
+        expected = 117440L,
+    )
     result2()
 }
