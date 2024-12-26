@@ -252,6 +252,18 @@ fun Direction.turnRight() = when (this) {
 
 enum class Direction8 { W, NW, N, NE, E, SE, S, SW; }
 
+typealias P3 = Triple<Int, Int, Int>
+
+val P3.x get() = first
+val P3.y get() = second
+val P3.z get() = third
+
+operator fun P3.plus(that: P3) = P3(this.x + that.x, this.y + that.y, this.z + that.z)
+
+operator fun P3.minus(that: P3) = P3(this.x - that.x, this.y - that.y, this.z - that.z)
+
+infix fun P3.manhattanDistanceTo(that: P3) = abs(this.x - that.x) + abs(this.y - that.y) + abs(this.z - that.z)
+
 fun gcd(x: Long, y: Long): Long {
     return if (y == 0L) x else gcd(y, x % y)
 }
