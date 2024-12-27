@@ -35,7 +35,7 @@ interface Day {
         get() = readInput(this::class.qualifiedName.orEmpty().replace('.', '/'))
 
     fun part1(input: List<String>): Any
-    fun part2(input: List<String>): Any
+    fun part2(input: List<String>): Any = Unit
     fun test1(input: String, expected: Any) = expect(part1(testInput(input)), expected)
     fun test2(input: String, expected: Any) = expect(part2(testInput(input)), expected)
     fun result1() = println("Part 1: ${part1(input)}")
@@ -63,6 +63,10 @@ fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
     val grid = Array(size) { this[it].toCharArray() }
     val (n, m) = grid.gridSize()
     return Triple(grid, n, m)
+}
+
+fun CharGrid.print() = forEach { line ->
+    println(line.concatToString())
 }
 
 inline fun CharGrid.firstOrThrow(predicate: (Char, Int, Int) -> Boolean): Triple<Char, Int, Int> {
