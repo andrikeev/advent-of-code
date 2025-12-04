@@ -96,6 +96,15 @@ inline fun CharGrid.forEach(action: (Char, Int, Int) -> Unit) {
     }
 }
 
+inline fun CharGrid.forEach(action: (Char, Point) -> Unit) {
+    val (n, m) = gridSize()
+    for (i in 0..<n) {
+        for (j in 0..<m) {
+            action(this[i][j], i to j)
+        }
+    }
+}
+
 inline fun IntGrid.forEach(action: (Int, Int, Int) -> Unit) {
     val (n, m) = gridSize()
     for (i in 0..<n) {
