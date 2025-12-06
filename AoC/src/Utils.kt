@@ -69,6 +69,13 @@ fun CharGrid.print() = forEach { line ->
     println(line.concatToString())
 }
 
+fun CharGrid.transpose(): CharGrid {
+    val (n, m) = gridSize()
+    return CharGrid(m, n) { i, j ->
+        this[j][i]
+    }
+}
+
 inline fun CharGrid.firstOrThrow(predicate: (Char, Int, Int) -> Boolean): Triple<Char, Int, Int> {
     forEach { c, i, j ->
         if (predicate(c, i, j)) {
