@@ -9,6 +9,7 @@ typealias Position = Pair<Point, Direction>
 typealias Position8 = Pair<Point, Direction8>
 typealias CharGrid = Array<CharArray>
 typealias IntGrid = Array<IntArray>
+typealias LongGrid = Array<LongArray>
 typealias Grid<T> = Array<Array<T>>
 
 fun readInput(name: String) =
@@ -67,6 +68,10 @@ fun List<String>.charGrid(): Triple<CharGrid, Int, Int> {
 
 fun CharGrid.print() = forEach { line ->
     println(line.concatToString())
+}
+
+fun IntGrid.print() = forEach { line ->
+    println(line.joinToString(" "))
 }
 
 fun CharGrid.transpose(): CharGrid {
@@ -129,6 +134,18 @@ fun CharGrid(n: Int, m: Int, init: (Int, Int) -> Char): CharGrid {
     }
 }
 
+fun LongGrid(
+    n: Int,
+    m: Int,
+    init: (Int, Int) -> Long = { _, _ -> 0L },
+): LongGrid {
+    return Array(n) { i ->
+        LongArray(m) { j ->
+            init(i, j)
+        }
+    }
+}
+
 operator fun CharGrid.get(point: Point): Char {
     require(point inside this) { "Point $point is out of grid bounds ${gridSize()}" }
     return this[point.i][point.j]
@@ -144,6 +161,21 @@ operator fun IntGrid.get(point: Point): Int {
     return this[point.i][point.j]
 }
 
+operator fun IntGrid.set(point: Point, i: Int) {
+    require(point inside this)
+    this[point.i][point.j] = i
+}
+
+operator fun LongGrid.get(point: Point): Long {
+    require(point inside this)
+    return this[point.i][point.j]
+}
+
+operator fun LongGrid.set(point: Point, l: Long) {
+    require(point inside this)
+    this[point.i][point.j] = l
+}
+
 fun List<String>.intGrid(): Triple<IntGrid, Int, Int> {
     val grid = Array(size) { this[it].map(Char::digitToInt).toIntArray() }
     val (n, m) = grid.gridSize()
@@ -155,6 +187,10 @@ fun CharGrid.gridSize(): Pair<Int, Int> {
 }
 
 fun IntGrid.gridSize(): Pair<Int, Int> {
+    return size to first().size
+}
+
+fun LongGrid.gridSize(): Pair<Int, Int> {
     return size to first().size
 }
 
@@ -174,6 +210,11 @@ infix fun Point.inside(grid: CharGrid): Boolean {
 }
 
 infix fun Point.inside(grid: IntGrid): Boolean {
+    val (n, m) = grid.gridSize()
+    return i in 0..<n && j in 0..<m
+}
+
+infix fun Point.inside(grid: LongGrid): Boolean {
     val (n, m) = grid.gridSize()
     return i in 0..<n && j in 0..<m
 }
