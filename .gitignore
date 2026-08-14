@@ -1,2 +1,8 @@
 .DS_Store
 .pre-commit-config.yaml
+
+### AoC Tiles ###
+# Everything in .aoc_tiles is local state (session cookie, leaderboard cache),
+# except the generated tile images, which are committed and shown in the README.
+.aoc_tiles/*
+!.aoc_tiles/tiles/

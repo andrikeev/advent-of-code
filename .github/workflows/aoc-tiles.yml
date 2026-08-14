@@ -1,0 +1,98 @@
+name: AoC Tiles
+
+# Regenerates the tile images and the tile block in README.md using the upstream
+# aoc-tiles package (https://github.com/LiquidFun/aoc_tiles).
+#
+# Requires a repository secret named AOC_SESSION_COOKIE containing the `session`
+# cookie from adventofcode.com. Without it the workflow still runs, but the tiles
+# fall back to checkmarks instead of showing solve time and rank.
+
+on:
+  push:
+    branches: [master]
+    # Only solution changes can affect the tiles. This also keeps the commit that
+    # this workflow pushes itself (README.md + tiles) from triggering a new run.
+    paths:
+      - 'AoC/src/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aoc-tiles
+  cancel-in-progress: false
+
+jobs:
+  tiles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install aoc-tiles
+        run: pip install aoc-tiles==0.7.2
+
+      - name: Provide session cookie
+        id: cookie
+        env:
+          AOC_SESSION_COOKIE: ${{ secrets.AOC_SESSION_COOKIE }}
+        run: |
+          mkdir -p .aoc_tiles
+          if [ -z "$AOC_SESSION_COOKIE" ]; then
+            echo "::warning::AOC_SESSION_COOKIE is not set - falling back to checkmarks instead of time and rank."
+            echo "solved-when=file_exists" >> "$GITHUB_OUTPUT"
+            echo "right-side=checkmark" >> "$GITHUB_OUTPUT"
+          else
+            printf '%s' "$AOC_SESSION_COOKIE" > .aoc_tiles/session.cookie
+            # on_leaderboard counts a star as earned even when the solution file
+            # was never committed, which is how the star totals were counted before.
+            echo "solved-when=on_leaderboard" >> "$GITHUB_OUTPUT"
+            echo "right-side=time_and_rank" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate tiles
+        run: |
+          aoc-tiles \
+            --aoc-dir . \
+            --count-as-solved-when '${{ steps.cookie.outputs.solved-when }}' \
+            --what-to-show-on-right-side '${{ steps.cookie.outputs.right-side }}' \
+            --verbosity 1
+
+      # aoc-tiles 0.7.2 emits <a href="None"> for a day that is on the leaderboard
+      # but has no committed solution file. Point those at the puzzle instead.
+      - name: Fix links for days without a committed solution
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          readme = Path("README.md")
+          text = readme.read_text(encoding="utf-8")
+          pattern = re.compile(
+              r'<a href="None">(\s*<img src="[^"]*?/(\d{4})/(\d{2})\.(?:png|gif)")'
+          )
+          patched, count = pattern.subn(
+              lambda m: f'<a href="https://adventofcode.com/{m[2]}/day/{int(m[3])}">{m[1]}',
+              text,
+          )
+          if count:
+              readme.write_text(patched, encoding="utf-8")
+          print(f"Rewrote {count} placeholder link(s).")
+          PY
+
+      - name: Commit and push
+        run: |
+          rm -f .aoc_tiles/session.cookie
+          git add README.md .aoc_tiles/tiles
+          if git diff --cached --quiet; then
+            echo "Tiles are already up to date."
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'Update AoC tiles'
+          git push
